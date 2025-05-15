@@ -10,11 +10,11 @@ class TestBurger:
         empty_burger.set_buns(wholegrain_bun)
         assert empty_burger.bun == wholegrain_bun
 
-    def test_add_ingredient(self, bun_burger, meat_filling):
+    def test_add_one_ingredient(self, bun_burger, meat_filling):
         bun_burger.add_ingredient(meat_filling)
         assert bun_burger.ingredients == [meat_filling]
 
-    def test_remove_ingredient(self, bun_burger, cheese_sauce):
+    def test_remove_one_ingredient(self, bun_burger, cheese_sauce):
         bun_burger.add_ingredient(cheese_sauce)
         bun_burger.remove_ingredient(0)
         assert bun_burger.ingredients == []
@@ -34,7 +34,7 @@ class TestBurger:
         (7.0, [0.8], 14.8),
         (5.3, [1.6, 4.4], 16.6),
     ])
-    def test_get_price_different(self, empty_burger, bun_price, ingredient_price, expected_total):
+    def test_get_different_price(self, empty_burger, bun_price, ingredient_price, expected_total):
         empty_burger.set_buns(Bun(data.BUN_NAME, bun_price))
         for price in ingredient_price:
             empty_burger.add_ingredient(Ingredient(ingredient_types.INGREDIENT_TYPE_FILLING, data.FILLING_NAME, price))
@@ -44,7 +44,7 @@ class TestBurger:
         bun_burger.add_ingredient(meat_filling)
         bun_burger.add_ingredient(cheese_sauce)
         receipt = bun_burger.get_receipt()
-        total = bun_burger.get_price()
+        total = (data.BUN_PRICE * 2 + data.FILLING_PRICE + data.SAUCE_PRICE)
         expected = "\n".join([
             f"(==== {data.BUN_NAME} ====)",
             f"= {ingredient_types.INGREDIENT_TYPE_FILLING.lower()} {data.FILLING_NAME} =",
