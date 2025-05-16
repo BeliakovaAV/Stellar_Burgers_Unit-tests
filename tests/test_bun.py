@@ -1,5 +1,5 @@
 import pytest
-from bun import Bun
+from Diplom_1.praktikum_stellar.bun import Bun
 import data
 
 

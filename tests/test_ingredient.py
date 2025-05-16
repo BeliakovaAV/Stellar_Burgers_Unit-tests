@@ -1,7 +1,6 @@
-import pytest
-from ingredient import Ingredient
 import data
 import ingredient_types
+from praktikum_stellar.ingredient import Ingredient
 
 
 class TestIngredient:

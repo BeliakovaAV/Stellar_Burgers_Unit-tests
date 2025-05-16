@@ -1,8 +1,8 @@
 import pytest
-from bun import Bun
-from ingredient import Ingredient
-import data
+from Diplom_1.praktikum_stellar.bun import Bun
+from Diplom_1.praktikum_stellar.ingredient import Ingredient
 import ingredient_types
+import data
 
 
 class TestBurger:
