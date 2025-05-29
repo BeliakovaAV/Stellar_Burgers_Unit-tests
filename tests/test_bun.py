@@ -16,8 +16,6 @@ class TestBun:
 
     @pytest.mark.parametrize("name, price", [(12345, "18 рублей"), ("Маковая", None)])
     def test_invalid_name_price_types(self, name, price):
-        try:
+        with pytest.raises(TypeError) as error_message:
             Bun(name, price)
-            assert False
-        except TypeError:
-            assert True
+        assert "type" in str(error_message.value).lower()

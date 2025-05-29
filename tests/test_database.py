@@ -48,20 +48,12 @@ class TestDatabase:
         assert actual_prices == expected_prices
         assert actual_type == [ingredient_type] * 3
 
-    def test_calls_bun_and_ingredient(self):
-        bun_calls = []
-        ingredient_calls = []
+    def test_calls_bun_and_ingredient(self, fake_bun, fake_ingredient):
+        bun_mock, bun_calls = fake_bun
+        ingredient_mock, ingredient_calls = fake_ingredient
 
-        def fake_bun(name, price):
-            bun_calls.append((name, price))
-            return "Булка"
-
-        def fake_ingredient(type_, name, price):
-            ingredient_calls.append((type_, name, price))
-            return "Ингредиент"
-
-        with patch('praktikum_stellar.database.Bun', new=fake_bun), \
-                patch('praktikum_stellar.database.Ingredient', new=fake_ingredient):
+        with patch('praktikum_stellar.database.Bun', new=bun_mock), \
+                patch('praktikum_stellar.database.Ingredient', new=ingredient_mock):
             database = Database()
 
             assert bun_calls == [

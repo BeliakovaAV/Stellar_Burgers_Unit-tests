@@ -20,11 +20,9 @@ class TestBurger:
         assert bun_burger.ingredients == []
 
     def test_remove_no_ingredient(self, bun_burger):
-        try:
+        with pytest.raises(IndexError) as error_message:
             bun_burger.remove_ingredient(0)
-            assert False
-        except IndexError:
-            assert True
+        assert "index" in str(error_message.value).lower()
 
     def test_move_ingredient(self, bun_burger, meat_filling, cheese_sauce):
         bun_burger.add_ingredient(meat_filling)

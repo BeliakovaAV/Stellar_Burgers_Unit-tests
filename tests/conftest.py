@@ -37,3 +37,25 @@ def bun_burger(empty_burger, wholegrain_bun):
 @pytest.fixture
 def database():
     return Database()
+
+
+@pytest.fixture
+def fake_bun():
+    calls = []
+
+    def _fake_bun(name, price):
+        calls.append((name, price))
+        return "Булка"
+
+    return _fake_bun, calls
+
+
+@pytest.fixture
+def fake_ingredient():
+    calls = []
+
+    def _fake_ingredient(type_, name, price):
+        calls.append((type_, name, price))
+        return "Ингредиент"
+
+    return _fake_ingredient, calls
