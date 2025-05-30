@@ -2,6 +2,7 @@ import pytest
 from ingredient_types import INGREDIENT_TYPE_SAUCE, INGREDIENT_TYPE_FILLING
 from unittest.mock import patch
 from praktikum_stellar.database import Database
+import helper
 
 
 class TestDatabase:
@@ -25,28 +26,17 @@ class TestDatabase:
                              [(INGREDIENT_TYPE_SAUCE, ["hot sauce", "sour cream", "chili sauce"], [100, 200, 300]),
                               (INGREDIENT_TYPE_FILLING, ["cutlet", "dinosaur", "sausage"], [100, 200, 300])])
     def test_available_ingredients_by_type(self, database, ingredient_type, expected_names, expected_prices):
-        ingredients_list = database.available_ingredients()
-        new_list = []
-        for ing in ingredients_list:
-            if ing.type == ingredient_type:
-                new_list.append(ing)
-        assert len(new_list) == 3
+        ingredients = helper.get_ingredients_by_type(database.available_ingredients(), ingredient_type)
+        assert len(ingredients) == len(expected_names)
 
-        actual_names = []
-        for ing in new_list:
-            actual_names.append(ing.name)
+        for i in range(len(ingredients)):
+            assert ingredients[i].name == expected_names[i]
 
-        actual_prices = []
-        for ing in new_list:
-            actual_prices.append(ing.price)
+        for i in range(len(ingredients)):
+            assert ingredients[i].price == expected_prices[i]
 
-        actual_type = []
-        for ing in new_list:
-            actual_type.append(ing.type)
-
-        assert actual_names == expected_names
-        assert actual_prices == expected_prices
-        assert actual_type == [ingredient_type] * 3
+        for ing in ingredients:
+            assert ing.type == ingredient_type
 
     def test_calls_bun_and_ingredient(self, fake_bun, fake_ingredient):
         bun_mock, bun_calls = fake_bun
